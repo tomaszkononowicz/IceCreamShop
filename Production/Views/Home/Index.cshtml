@@ -1,0 +1,107 @@
+﻿@using Newtonsoft.Json;
+@using Messages;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="navReturn">
+    <div class="ulReturn">
+        <div class="liReturn" id="nav1"><a href="http://localhost:46706/Home/Index">< Powrót</a></div>
+    </div>
+</div>
+
+<h2>Produkcja</h2>
+
+<div class="table1">
+    <table>
+        <thead>
+            <tr>
+                <th> Polecenie </th>
+                <th> Szczegóły </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < (ViewData["queues"] as IList<Queue>).Count; i++)
+            {
+                var queue = (ViewData["queues"] as IList<Queue>)[i];
+
+                <tr>
+                    @{
+                        switch (queue.Command)
+                        {
+                            case "ToProduce":
+                                {
+                                    <th>Zamówienie na produkty</th>
+                                    var message = JsonConvert.DeserializeObject<ToProduce>(queue.Msg);
+                                    <th>
+                                        @(message.Name + ": " + message.Amount)
+                                    </th>
+                                    break;
+                                }
+                            default:
+                    <th>Żądanie nie może zostać rozpoznane</th> break;
+                        }
+                    }
+                    <th>
+                        <input type="button" class="order" value="Wykonaj" onclick="location.href='/Home/@(queue.Command)/@(queue.MsgId)'" />
+                    </th>
+                </tr>
+                        }
+        </tbody>
+    </table>
+</div>
+
+<div class="table1">
+    <table>
+        <thead>
+            <tr>
+                <td> Produkt </td>
+                <td>  </td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i< (ViewData["products"] as IList<Product>).Count; i++)
+            {
+                Product p = (ViewData["products"] as IList<Product>)[i];
+                IEnumerable<Recipe> rs = (ViewData["recipes"] as IList<Recipe>).Where(r => r.ProductId == i+1);
+                <tr>
+                    <th>
+                        @p.Name 
+                        @for (int j = 0; j < rs.Count(); j++)
+                        {
+                            <br /><span>- @rs.ElementAt(j).SemiFinishedGoodName (@rs.ElementAt(j).Amount)</span>
+                    }
+
+                    </th>
+                    <th>
+                        <input type="button" class="order" value="Wyprodukuj" onclick="update('@p.Name', 'nameSemi')"/>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="produce">
+        <form action="/Home/Produce" method="post">
+            <span class="orderTitle">Przekaż do produkcji</span> <br />
+            <label class="orderLabel">Nazwa: </label><input id="nameSemi" readonly="readonly" name="name" type="text" /><br />
+            <label class="orderLabel">Ilość: </label><input id="amountSemi" name="amount" type="text" /><br />
+            <input type="submit" value="Wyprodukuj" />
+        </form>
+    </div>
+
+    <div class="produce">
+            <input type="submit" value="Pokaż historię produkcji" onclick="location.href='/Home/History'" />
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function update(name, inputid) {
+        document.getElementById(inputid).value = name;
+    }
+</script>
+
+
+

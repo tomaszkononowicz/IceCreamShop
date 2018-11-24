@@ -1,0 +1,258 @@
+﻿html {
+	position:relative;
+	min-height: 100%;
+}
+
+body {
+	 font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    background-color: white;
+    color: black;
+	-webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	margin-bottom: 100px;
+    }
+	
+header {
+	text-align: center;
+	display:block;
+	background-color: white;
+	width: 100%;
+    height:100px;
+    }
+	
+header #prefix {
+	position: absolute;
+	left: -200px;
+	right: 0;
+	color: #127cc1;
+	font-size: 30px;
+	display: block;
+	float: left;
+	margin-right: 0;
+	margin-left: 0;
+	margin-top: 50px;
+	
+}
+	
+header img {
+	position: relative;
+    text-align: center;
+    overflow:hidden;
+}
+	
+nav {
+    margin-top: 100px;
+	display: block;
+	background-color: rgba(232, 213, 232, 0.50);
+	width: 100%;
+	text-align: center;
+	padding-top: 40px;
+    opacity: 0.9;
+}
+
+	nav ul {
+		list-style: none;
+		}
+
+		nav ul li {
+			display: inline-block;
+			font-size: 22px;
+			list-style-type: none;
+			list-style: none;
+			vertical-align:top;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-bottom: 40px;
+
+			}
+			
+		nav ul li a.active {
+			background-color: #a00031;
+			color: white;
+			}
+			
+		nav ul a:link, ul a:visited {
+			color: #a00031;
+			text-decoration: none;
+			display: block;
+			background-color: white;
+			padding: 60px 90px;
+			list-style-type: none;
+			-webkit-border-radius: 30px;
+			-moz-border-radius: 30px;
+			border-radius: 30px;
+            font-size: 35px
+			}
+	
+		nav ul a:hover {
+			background-color: #a00031;
+			color: white;
+            opacity: 1;
+			}
+
+
+.navReturn {
+	display: block;
+	padding-top: 10px;
+
+}
+
+	.navReturn .ulReturn {
+		list-style: none;
+		}
+
+		.navReturn .ulReturn .liReturn {
+			display: inline-block;
+			font-size: 22px;
+			list-style-type: none;
+			list-style: none;
+			vertical-align:top;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-bottom: 10px;
+
+			}
+			
+		.navReturn .ulReturn .liReturn a.active {
+			background-color: #a00031;
+			color: white;
+			}
+			
+		.navReturn .ulReturn a:link, .ulReturn a:visited {
+			color: #a00031;
+			text-decoration: none;
+			display: block;
+			background-color: rgba(232, 213, 232, 0.50);
+			padding: 10px 20px;
+			list-style-type: none;
+			-webkit-border-radius: 30px;
+			-moz-border-radius: 30px;
+			border-radius: 30px;
+            font-size: 20px
+			}
+	
+		.navReturn .ulReturn a:hover {
+			background-color: #a00031;
+			color: white;
+            opacity: 1;
+			}
+			
+
+h2 {
+	color: #a00031;
+	text-align: center;
+	font-size: 30px;
+    margin-bottom: 20px;
+}
+			
+p {
+	color: black;
+	text-align: justify;
+	font-size: 18px;
+	display: block;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	max-width: 800px;
+	}
+
+	
+/*table {
+	text-align:left;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 80px;
+	margin-bottom: 50px;
+}
+
+table tr td {
+	border: 3px solid #285681;
+	padding: 5px 10px 5px 10px;
+}
+
+table .tr-1 {
+	text-align:center;
+	background-color: #285681;
+	color: white;
+}
+
+table .tr-1 .td-1 {
+	background-color: white;
+	border: 0px;
+}*/
+
+footer {
+	color: white;
+    position: absolute;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 5px 0px 5px 0px;
+    bottom: 0px;
+    width: 100%;
+    clear: both;
+	font-size: 15px;
+    text-align: center;
+    background-color: #a00031;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 10px 15px;
+}
+
+
+thead {
+    background: #a00031;
+    color: white;
+}
+
+
+tbody tr:nth-child(even) {
+    background: rgba(232, 213, 232, 0.50);
+}
+
+input[type=text] {
+    width: 100px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+input[type=submit] {
+    background-color: #a00031;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+label {
+    font-family:"Segoe UI",Arial,sans-serif;
+    margin:10px;
+    letter-spacing:2px;
+}
+
+.table1 {
+    padding: 15px;
+    padding-left: 20%;
+    padding-right: 20%;
+    display: inline-block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table2 {
+    display: inline-block;
+    width: 50%;
+    float: left;
+    padding: 15px;
+}

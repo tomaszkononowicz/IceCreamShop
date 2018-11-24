@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="navReturn">
+    <div class="ulReturn">
+        <div class="liReturn" id="nav1"><a href="http://localhost:46706/Home/Index">< Powrót</a></div>
+    </div>
+</div>
+
+<h2>Sprzedaż</h2>
+
+<div class="table1">
+    <form method="post" action="/Home/Sale">
+        <table>
+            <thead>
+                <tr>
+                    <td class="left"> Produkt </td>
+                    <td class="center"> Ilość </td>
+                    <td>  </td>
+                    <td>  </td>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i=0; i<(ViewData["products"] as IList<Product>).Count; i++)
+                {
+                    Product p = (ViewData["products"] as IList<Product>).ElementAt(i);
+                    <tr id="row @p.Name">
+                        <th class="left">
+                            @p.Name
+                        </th>
+                        <th class="center">
+                            <input readonly="readonly" class="amount center" id="@p.Name" name="positions[]" value="0" />
+                        </th>
+                        <th>
+                            <input type="button" class="order" value="+" onclick="increment('@p.Name')" />
+                        </th>
+                        <th>
+                            <input type="button" class="order" value="-" onclick="decrement('@p.Name')" />
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="produce">
+            <input type="submit" value="Sprzedaj" />
+        </div>
+
+    </form>
+
+    <div class="produce">
+        <input type="submit" value="Pokaż historię sprzedaży" onclick="location.href='/Home/History'" />
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    function decrement(name) {
+        if (parseInt(document.getElementById(name).value) - 1 >= 0) {
+            document.getElementById(name).value = (parseInt(document.getElementById(name).value) - 1);
+        }
+        saleColor(name);
+    };
+
+    function increment(name) {
+        document.getElementById(name).value = (parseInt(document.getElementById(name).value) + 1);
+        saleColor(name);
+    };
+
+    function saleColor(name) {
+        if (parseInt(document.getElementById(name).value) > 0) {
+            document.getElementById('row ' + name).style.backgroundColor = "#FF7575"
+        }
+        else {
+            document.getElementById('row ' + name).style.backgroundColor = ""
+        }
+    }
+
+</script>
+
+
+

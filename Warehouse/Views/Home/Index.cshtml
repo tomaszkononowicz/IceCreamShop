@@ -1,0 +1,177 @@
+﻿@using Newtonsoft.Json;
+@using Messages;
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Magazyn</h2>
+
+<div class="table1">
+    <table>
+        <thead>
+            <tr>
+                <th> Polecenie </th>
+                <th> Szczegóły </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < (ViewData["queues"] as IList<Queue>).Count; i++)
+            {
+                var queue = (ViewData["queues"] as IList<Queue>)[i];
+
+                <tr>
+                    @{
+                        switch (queue.Command)
+                        {
+                            case "GetSemiFinishedGoods":
+                                {
+                                    <th>Zamówienie na półprodukty</th>
+                                    var message = JsonConvert.DeserializeObject<GetSemiFinishedGoods>(queue.Msg);
+                                    <th>
+                                        @foreach (var item in message.SemiFinishedGoods)
+                                        {
+                                            @(item.Key + ": " + item.Value)
+                                            <br />
+                                        }
+                                    </th>
+
+                                    break;
+                                }
+                            case "PutProduct":
+                                {
+                                    <th>Przyjmij produkt do magazynu</th>
+                                    var message = JsonConvert.DeserializeObject<PutProduct>(queue.Msg);
+                                    <th>
+                                            @(message.Name + ": " + message.Amount)
+                                    </th>
+                                    break;
+                                }
+                            case "GetProducts":
+                                {
+                                    <th>Skompletuj zamówienie</th>
+                                    var message = JsonConvert.DeserializeObject<GetProducts>(queue.Msg);
+                                    <th>
+                                        @foreach (var item in message.Products)
+                                        {
+                                            @(item.Key + ": " + message.ProductsCompleted[item.Key] + "/" + item.Value)
+                                            <br />
+                                        }
+                                    </th>
+                                    break;
+                                }
+                            case "ProductsForSale":
+                                {
+                                    <th>Wyślij skompletowane zamówienie</th>
+                                    var message = JsonConvert.DeserializeObject<Dictionary<string, decimal>>(queue.Msg);
+                                    <th>
+                                        @foreach (var item in message)
+                                        {
+                                            @(item.Key + ": " + item.Value)
+                                            <br />
+                                        }
+                                    </th>
+                                    break;
+                                }
+                            default: <th>Żądanie nie może zostać rozpoznane</th> break;
+                        }
+                    }                
+                    <th>
+                        <input type="button" class="order" value="Wykonaj" onclick="location.href='/Home/@(queue.Command)/@(queue.MsgId)'" />
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="table2">
+    <table>
+        <thead>
+            <tr>
+                <th> Półprodukt </th>
+                <th> Ilość </th>
+                <th>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i< (ViewData["semiFinishedGoods"] as IList<SemiFinishedGood>).Count; i++)
+            {
+                SemiFinishedGood p = (ViewData["semiFinishedGoods"] as IList<SemiFinishedGood>)[i];
+                <tr>
+                    <th>@p.Name</th>
+                    <th>
+                        @((ViewData["semiFinishedGoodsAmount"] as IList<SemiFinishedGoodAmount>).ElementAt(i).Amount)
+                    </th>
+                    <th>
+                        <input type="button" class="order" value="Zamów" onclick="update('@p.Name', 'nameSemi')"/>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="addNewProduct">
+        <form action="/Home/AddOrUpdateSemi" method="post">
+            <span class="orderTitle">Zamówienie</span> <br />
+            <label class="orderLabel">Nazwa: </label><input id="nameSemi" name="name" type="text" /><br />
+            <label class="orderLabel">Ilość: </label><input id="amountSemi" name="amount" type="text" /><br />
+            <input type="submit" value="Zamów" />
+        </form>
+    </div>
+
+</div>
+
+<div class="table2">
+    <table>
+        <thead>
+            <tr>
+                <th> Produkt </th>
+                <th> Ilość [L] </th>
+                <th>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < (ViewData["products"] as IList<Product>).Count; i++)
+            {
+                Product p = (ViewData["products"] as IList<Product>)[i];
+                <tr>
+                    <th>@p.Name</th>
+                    <th>
+                    
+                    @((ViewData["productsAmount"] as IList<ProductAmount>).ElementAt(i).Amount)</th>
+
+                    <th>
+                        <input type="button" class="order" value="Zamów" onclick="update('@p.Name', 'nameProduct')" />
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <div class="addNewProduct">
+        <form action="/Home/AddOrUpdateProduct" method="post">
+            <span class="orderTitle">Zamówienie</span> <br />
+            <label class="orderLabel">Nazwa: </label><input id="nameProduct" name="name" type="text" /><br />
+            <label class="orderLabel">Ilość: </label><input id="amountProduct" name="amount" type="text" /><br />
+            <input type="submit" value="Zamów" />
+        </form>
+    </div>
+
+
+
+
+</div>
+
+<script type="text/javascript">
+    function update(name, inputid) {
+        document.getElementById(inputid).value = name;
+    }
+</script>
+
+
+

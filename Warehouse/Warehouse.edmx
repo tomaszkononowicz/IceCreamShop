@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IceCreamShop_WarehouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProductAmount">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="MsgId" />
+          </Key>
+          <Property Name="MsgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CorrelationId" Type="uniqueidentifier" />
+          <Property Name="Command" Type="nvarchar" MaxLength="100" />
+          <Property Name="Msg" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="SemiFinishedGoodAmount">
+          <Key>
+            <PropertyRef Name="SemiFinishedGoodId" />
+          </Key>
+          <Property Name="SemiFinishedGoodId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IceCreamShop_Warehouse.dbo.Product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IceCreamShop_Warehouse.dbo.SemiFinishedGood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SemiFinishedGood">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="IceCreamShop_WarehouseModelStoreContainer">
+          <EntitySet Name="ProductAmount" EntityType="Self.ProductAmount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Queue" EntityType="Self.Queue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SemiFinishedGoodAmount" EntityType="Self.SemiFinishedGoodAmount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Product].[Id] AS [Id], 
+    [Product].[Name] AS [Name]
+    FROM [dbo].[Product] AS [Product]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SemiFinishedGood" EntityType="Self.SemiFinishedGood" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SemiFinishedGood].[Id] AS [Id], 
+    [SemiFinishedGood].[Name] AS [Name]
+    FROM [dbo].[SemiFinishedGood] AS [SemiFinishedGood]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IceCreamShop_WarehouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ProductAmount">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="SemiFinishedGoodAmount">
+          <Key>
+            <PropertyRef Name="SemiFinishedGoodId" />
+          </Key>
+          <Property Name="SemiFinishedGoodId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SemiFinishedGood">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="IceCreamShop_WarehouseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProductAmounts" EntityType="Self.ProductAmount" />
+          <EntitySet Name="SemiFinishedGoodAmounts" EntityType="Self.SemiFinishedGoodAmount" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="SemiFinishedGoods" EntityType="Self.SemiFinishedGood" />
+          <EntitySet Name="Queues" EntityType="IceCreamShop_WarehouseModel.Queue" />
+        </EntityContainer>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="MsgId" />
+          </Key>
+          <Property Name="MsgId" Type="Int32" Nullable="false" />
+          <Property Name="Command" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Msg" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CorrelationId" Type="Guid" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IceCreamShop_WarehouseModelStoreContainer" CdmEntityContainer="IceCreamShop_WarehouseEntities">
+          <EntitySetMapping Name="ProductAmounts">
+            <EntityTypeMapping TypeName="IceCreamShop_WarehouseModel.ProductAmount">
+              <MappingFragment StoreEntitySet="ProductAmount">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SemiFinishedGoodAmounts">
+            <EntityTypeMapping TypeName="IceCreamShop_WarehouseModel.SemiFinishedGoodAmount">
+              <MappingFragment StoreEntitySet="SemiFinishedGoodAmount">
+                <ScalarProperty Name="SemiFinishedGoodId" ColumnName="SemiFinishedGoodId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="IceCreamShop_WarehouseModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SemiFinishedGoods">
+            <EntityTypeMapping TypeName="IceCreamShop_WarehouseModel.SemiFinishedGood">
+              <MappingFragment StoreEntitySet="SemiFinishedGood">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Queues">
+            <EntityTypeMapping TypeName="IceCreamShop_WarehouseModel.Queue">
+              <MappingFragment StoreEntitySet="Queue">
+                <ScalarProperty Name="CorrelationId" ColumnName="CorrelationId" />
+                <ScalarProperty Name="Msg" ColumnName="Msg" />
+                <ScalarProperty Name="Command" ColumnName="Command" />
+                <ScalarProperty Name="MsgId" ColumnName="MsgId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

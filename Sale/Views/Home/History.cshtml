@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="navReturn">
+    <div class="ulReturn">
+        <div class="liReturn" id="nav1"><a href="/Home/Index">< Powrót</a></div>
+    </div>
+</div>
+
+<h2>Historia sprzedaży</h2>
+
+<div class="table1">
+    <table>
+        <thead>
+            <tr>
+                <td> Data </td>
+                <td> Produkty i ilość </td>
+                <td> Cena </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Sale s in ViewData["sales"] as IList<Sale>)
+            {
+                <tr>
+                    <th>
+                        @s.Date
+                    </th>
+                    <th>
+                        @foreach (SalePosition sp in s.SalePositions)
+                        {
+                            @((ViewData["products"] as Dictionary<int, string>)[sp.ProductId] + ": " + sp.Amount)
+                            <br />
+                        }
+                    </th>
+                    <th>
+                        @s.SumPrice
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
